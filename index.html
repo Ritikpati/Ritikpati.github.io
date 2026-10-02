@@ -318,6 +318,17 @@
     .contact-icon-btn:hover .ci-icon { box-shadow: 0 14px 40px rgba(0,212,255,0.25); }
     .ci-label { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
 
+    /* CONTACT DETAILS */
+    .contact-details { max-width: 520px; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 0.8rem; }
+    .contact-row { display: flex; align-items: center; gap: 1rem; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 1.2rem; }
+    .contact-key { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; width: 56px; flex-shrink: 0; }
+    .contact-val { font-family: var(--mono); font-size: 0.85rem; color: var(--accent); text-decoration: none; flex: 1; word-break: break-all; }
+    .contact-val:hover { color: var(--accent2); }
+    .copy-btn { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.4rem 0.9rem; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; transition: all 0.2s; }
+    .copy-btn:hover { background: rgba(0,212,255,0.1); }
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--accent2); color: var(--bg); font-family: var(--mono); font-size: 0.78rem; font-weight: 700; padding: 0.6rem 1.4rem; border-radius: 8px; opacity: 0; pointer-events: none; transition: all 0.3s; z-index: 200; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
     /* CV */
     .cv-section {
       background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(123,97,255,0.05));
@@ -356,6 +367,17 @@
       .contact-icons-row { gap: 1.8rem; }
     }
   </style>
+  <script>
+    // If an icon image fails to load (CDN blocked/offline), show an emoji instead
+    var ICON_FALLBACK = {Docker:'🐳', K8s:'☸️', AWS:'☁️', Terraform:'🏗️', Linux:'🐧', Jenkins:'🔧', Ansible:'⚙️', Git:'🔀', Python:'🐍'};
+    function iconFallback(img) {
+      var span = document.createElement('span');
+      span.textContent = ICON_FALLBACK[img.alt] || '⬡';
+      span.style.fontSize = '1.5rem';
+      span.style.lineHeight = '1';
+      img.replaceWith(span);
+    }
+  </script>
 </head>
 <body>
 
@@ -367,19 +389,19 @@
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><button class="btn btn-primary" onclick="downloadCV()" style="padding:0.5rem 1.2rem;">Download CV</button></li>
+    <li><a class="btn btn-primary" href="#cv-download" style="padding:0.5rem 1.2rem;color:var(--bg);">See my Resume</a></li>
   </ul>
 </nav>
 
 <!-- FLOATING SOCIALS -->
 <div class="socials-float">
-  <a class="social-link" href="https://github.com/Ritikrpati23032003" target="_blank" title="GitHub">
+  <a class="social-link" href="https://github.com/Ritikpati" target="_blank" title="GitHub">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
   </a>
   <a class="social-link" href="https://www.linkedin.com/in/ritik-ranjan-pati-a51b8725b/" target="_blank" title="LinkedIn">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
   </a>
-  <a class="social-link" href="/cdn-cgi/l/email-protection#cbb9a2bfa2a0b9aaa5a1aaa5bbaabfa28baca6aaa2a7e5a8a4a6" title="Email">
+  <a class="social-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=ritikranjanpati@gmail.com" target="_blank" rel="noopener" title="Email">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
   </a>
 </div>
@@ -394,10 +416,6 @@
       Motivated Cloud &amp; DevOps Engineer with expertise in AWS, Azure, GCP, Terraform, Docker, and Kubernetes. Building scalable cloud architectures, serverless applications, and automated CI/CD pipelines with robust monitoring systems.
     </p>
     <div class="hero-cta">
-      <button class="btn btn-primary" onclick="downloadCV()">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download CV
-      </button>
       <a class="btn btn-outline" href="#contact">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         Get In Touch
@@ -419,19 +437,19 @@
     <!-- Ring 1: Docker · K8s · AWS · Terraform -->
     <div class="ring ring-1">
       <div class="node n1">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" onerror="iconFallback(this)"/></div>
         <span class="node-label">Docker</span>
       </div>
       <div class="node n2">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg" alt="K8s" onerror="iconFallback(this)"/></div>
         <span class="node-label">K8s</span>
       </div>
       <div class="node n3">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" onerror="iconFallback(this)"/></div>
         <span class="node-label">AWS</span>
       </div>
       <div class="node n4">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg" alt="Terraform" onerror="iconFallback(this)"/></div>
         <span class="node-label">Terraform</span>
       </div>
     </div>
@@ -439,23 +457,23 @@
     <!-- Ring 2: Linux · Jenkins · Ansible · Git · Python -->
     <div class="ring ring-2">
       <div class="node n1">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt="Linux" onerror="iconFallback(this)"/></div>
         <span class="node-label">Linux</span>
       </div>
       <div class="node n2">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg" alt="Jenkins" onerror="iconFallback(this)"/></div>
         <span class="node-label">Jenkins</span>
       </div>
       <div class="node n3">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" alt="Ansible"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg" alt="Ansible" onerror="iconFallback(this)"/></div>
         <span class="node-label">Ansible</span>
       </div>
       <div class="node n4">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" onerror="iconFallback(this)"/></div>
         <span class="node-label">Git</span>
       </div>
       <div class="node n5">
-        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"/></div>
+        <div class="node-icon"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" onerror="iconFallback(this)"/></div>
         <span class="node-label">Python</span>
       </div>
     </div>
@@ -471,7 +489,6 @@
     <h2 class="section-title">Technical <span>Skills</span></h2>
     <div class="skills-grid">
 
-      <!-- Multicloud -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(255,153,0,0.12)">☁️</div>
         <div>
@@ -480,7 +497,6 @@
         </div>
       </div>
 
-      <!-- Terraform -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(123,97,255,0.12)">🏗️</div>
         <div>
@@ -489,7 +505,6 @@
         </div>
       </div>
 
-      <!-- Docker -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(0,212,255,0.10)">🐳</div>
         <div>
@@ -498,7 +513,6 @@
         </div>
       </div>
 
-      <!-- Kubernetes -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(0,114,255,0.12)">⚓</div>
         <div>
@@ -507,7 +521,6 @@
         </div>
       </div>
 
-      <!-- Monitoring & Observability -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(255,165,0,0.12)">📊</div>
         <div>
@@ -516,7 +529,6 @@
         </div>
       </div>
 
-      <!-- Linux -->
       <div class="skill-card fade-in">
         <div class="skill-icon" style="background:rgba(255,220,80,0.10)">🐧</div>
         <div>
@@ -525,8 +537,7 @@
         </div>
       </div>
 
-      <!-- CI/CD -->
-            <div class="skill-card fade-in"><div class="skill-icon" style="background:rgba(0,255,157,0.08)">🔐</div><div><div class="skill-title">Security &amp; IAM</div><div class="skill-sub">WAF · GuardDuty · IAM Policies</div></div></div>
+      <div class="skill-card fade-in"><div class="skill-icon" style="background:rgba(0,255,157,0.08)">🔐</div><div><div class="skill-title">Security &amp; IAM</div><div class="skill-sub">WAF · GuardDuty · IAM Policies</div></div></div>
       <div class="skill-card fade-in"><div class="skill-icon" style="background:rgba(255,80,80,0.10)">📦</div><div><div class="skill-title">Ansible</div><div class="skill-sub">Configuration Management · Automation</div></div></div>
     </div>
   </div>
@@ -554,19 +565,13 @@
     <div class="section-label">// get in touch</div>
     <h2 class="section-title">Contact <span>&amp; Socials</span></h2>
     <div class="contact-icons-row">
-      <a class="contact-icon-btn" href="tel:+919348520919">
-        <div class="ci-icon" style="background:rgba(0,255,157,0.08);border-color:rgba(0,255,157,0.3)">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00ff9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.63 3.36 2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l.95-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <span class="ci-label">Phone</span>
-      </a>
-      <a class="contact-icon-btn" href="/cdn-cgi/l/email-protection#6e1c071a07051c0f00040f001e0f1a072e09030f0702400d0103">
+      <a class="contact-icon-btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=ritikranjanpati@gmail.com" target="_blank" rel="noopener">
         <div class="ci-icon" style="background:rgba(0,212,255,0.08);border-color:rgba(0,212,255,0.3)">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00d4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <span class="ci-label">Email</span>
       </a>
-      <a class="contact-icon-btn" href="https://github.com/Ritikrpati23032003" target="_blank">
+      <a class="contact-icon-btn" href="https://github.com/Ritikpati" target="_blank">
         <div class="ci-icon" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.2)">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e8f4ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
         </div>
@@ -585,7 +590,7 @@
       <p>// Cloud &amp; DevOps Engineer — AWS · Azure · GCP · Kubernetes · Terraform</p>
       <button class="btn btn-primary" onclick="downloadCV()" style="font-size:0.9rem;padding:1rem 2.5rem;">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download CV — Ritik Ranjan Pati
+        Download Resume — Ritik Ranjan Pati
       </button>
       <p style="margin-top:1rem;font-size:0.7rem;color:var(--muted);">// Upload cv.pdf in the same folder as index.html</p>
     </div>
@@ -594,11 +599,16 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 <span>Ritik Ranjan Pati</span> · Cloud &amp; DevOps Engineer · <span>rittik.shop</span></p>
+  <p>© 2025 <span>Ritik Ranjan Pati</span> · Cloud &amp; DevOps Engineer</p>
   <p style="margin-top:0.5rem;">Built with ❤️ &amp; deployed on the cloud</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
+  // ── Orbit icons: catch any image that already failed ──
+  document.querySelectorAll('.node-icon img').forEach(function(img) {
+    if (img.complete && img.naturalWidth === 0) iconFallback(img);
+  });
+
   // ── Typewriter — single role ──
   const text = 'Cloud & DevOps Engineer';
   let ci = 0;
@@ -618,10 +628,10 @@
   document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
 
 
-  // ── GitHub Projects ──
+  // ── GitHub Projects (auto-fetch; not called by default) ──
   async function loadProjects() {
     const grid = document.getElementById('projects-grid');
-    const username = 'Ritikrpati23032003';
+    const username = 'Ritikpati';
     const langColors = {
       Python:'#3572A5', JavaScript:'#f1e05a', TypeScript:'#2b7489',
       Shell:'#89e051', HCL:'#844FBA', Dockerfile:'#384d54',
@@ -645,7 +655,6 @@
 
       grid.innerHTML = filtered.map(repo => {
         const lang = repo.language || '';
-        const colorClass = langColors[lang] ? `lang-${lang}` : 'lang-default';
         const desc = repo.description || 'No description provided.';
         const topics = (repo.topics || []).slice(0, 3);
 
@@ -665,14 +674,8 @@
 
           <div class="project-footer">
             ${lang ? `<div class="project-lang"><span class="lang-dot" style="background:${langColors[lang] || '#6b8aad'}"></span>${lang}</div>` : ''}
-            <div class="project-stat">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-              ${repo.stargazers_count}
-            </div>
-            <div class="project-stat">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="3" x2="6" y2="15"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></svg>
-              ${repo.forks_count}
-            </div>
+            <div class="project-stat">★ ${repo.stargazers_count}</div>
+            <div class="project-stat">⑂ ${repo.forks_count}</div>
             <div class="project-stat" style="margin-left:auto;font-size:0.62rem">
               Updated ${new Date(repo.updated_at).toLocaleDateString('en-IN',{month:'short',year:'numeric'})}
             </div>
@@ -680,7 +683,6 @@
         </a>`;
       }).join('');
 
-      // re-observe new fade-in cards
       document.querySelectorAll('.project-card.fade-in').forEach(el => obs.observe(el));
 
     } catch(err) {
@@ -689,46 +691,47 @@
       </div>`;
     }
   }
+
   // ── Specific GitHub Projects ──
   const projects = [
     {
       name: 'google-store-DevOps-project',
-      url: 'https://github.com/Ritikrpati23032003/google-store-DevOps-project',
+      url: 'https://github.com/Ritikpati/google-store-DevOps-project',
       desc: 'End-to-end DevOps pipeline for a Google Store application, containerized with Docker, orchestrated via Kubernetes, and deployed with automated CI/CD on cloud infrastructure.',
       tags: ['DevOps', 'Kubernetes', 'CI/CD', 'Docker'],
       lang: 'HCL', langColor: '#844FBA'
     },
     {
       name: 'monitoring-alerts',
-      url: 'https://github.com/Ritikrpati23032003/monitoring-alerts',
+      url: 'https://github.com/Ritikpati/monitoring-alerts',
       desc: 'Cloud monitoring and alerting system using Grafana, Prometheus, and Node Exporter to track infrastructure metrics and trigger real-time alerts.',
       tags: ['Grafana', 'Prometheus', 'Monitoring', 'Observability'],
       lang: 'YAML', langColor: '#cb171e'
     },
     {
       name: 'EcommerceApp',
-      url: 'https://github.com/Ritikrpati23032003/EcommerceApp',
+      url: 'https://github.com/Ritikpati/EcommerceApp',
       desc: 'Full-stack ecommerce application deployed on cloud with automated infrastructure provisioning, load balancing, and scalable backend services.',
       tags: ['AWS', 'Cloud', 'Full-Stack'],
       lang: 'JavaScript', langColor: '#f1e05a'
     },
     {
       name: 'docker-python-flask-project',
-      url: 'https://github.com/Ritikrpati23032003/docker_python_flask-project',
+      url: 'https://github.com/Ritikpati/docker_python_flask-project',
       desc: 'Dockerized Python Flask web application with multi-stage builds, Docker Compose for local development, and optimized container images for production.',
       tags: ['Docker', 'Python', 'Flask', 'Containerization'],
       lang: 'Python', langColor: '#3572A5'
     },
     {
       name: 'kubernetes-ingress-deployment',
-      url: 'https://github.com/Ritikrpati23032003/kubernetes-ingress-deployment',
+      url: 'https://github.com/Ritikpati/kubernetes-ingress-deployment',
       desc: 'Production-grade Kubernetes deployment with Ingress controller configuration, service routing, TLS termination, and rolling update strategies.',
       tags: ['Kubernetes', 'Ingress', 'K8s', 'Deployment'],
       lang: 'YAML', langColor: '#cb171e'
     },
     {
       name: '3-tier-book-store-project-terraform',
-      url: 'https://github.com/Ritikrpati23032003/3-tier-book-store-project-terraform',
+      url: 'https://github.com/Ritikpati/3-tier-book-store-project-terraform',
       desc: 'Three-tier bookstore application fully provisioned with Terraform on AWS — web, app, and database layers with VPC, auto-scaling, load balancer, and RDS.',
       tags: ['Terraform', 'AWS', '3-Tier', 'IaC'],
       lang: 'HCL', langColor: '#844FBA'
@@ -758,6 +761,30 @@
   `).join('');
 
   document.querySelectorAll('.project-card.fade-in').forEach(el => obs.observe(el));
+
+  // ── Copy to clipboard ──
+  function copyText(value) {
+    const toast = document.getElementById('toast');
+    const done = () => {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1600);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(value).then(done).catch(() => fallbackCopy(value, done));
+    } else {
+      fallbackCopy(value, done);
+    }
+  }
+  function fallbackCopy(value, done) {
+    const ta = document.createElement('textarea');
+    ta.value = value;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
 
   // ── CV Download ──
   function downloadCV() {
